@@ -1,5 +1,5 @@
 name: Check precommit checks
-run-name: ${{ github.actor }} initiated this action 🚀
+run-name: Check that precommit was run
 on: [push]
 jobs:
   checks:

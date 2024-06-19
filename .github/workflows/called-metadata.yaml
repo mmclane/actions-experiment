@@ -1,0 +1,39 @@
+name: CalledMetadata
+run-name: Collecting and posting metadata 🚀
+on: 
+  workflow_call:
+    inputs:
+      pr_number:
+        description: 'Pull request number'
+        required: true
+        type: string  
+    
+jobs:
+  comment-metadata:
+    runs-on: ubuntu-latest
+    name: Comment on PR
+    steps:
+      - uses: snnaplab/get-labels-action@v1
+        with:
+          number: ${{ inputs.pr_number }}
+          repository: ${{ github.repository }}
+      - name: Comment PR
+        if: contains(fromJSON(env.LABELS), 'metadata-posted') == false
+        uses: thollander/actions-comment-pull-request@v2 # https://github.com/thollander/actions-comment-pull-request
+        with:
+          pr_number: ${{ inputs.pr_number }}
+          message: |
+            Called-metadata
+            Repository: ${{ github.repository }}
+            Branch Name: ${{ github.ref_name }}
+            Target Branch: ${{ github.base_ref }}
+
+            Github Event: ${{ github.event_name }}
+            Triggered by: ${{ github.actor }}
+          reactions: eyes, rocket
+      - name: Add metadata-posted label
+        if: contains(fromJSON(env.LABELS), 'metadata-posted') == false
+        uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
+        with:
+          number: ${{ inputs.pr_number }}
+          labels: metadata-posted

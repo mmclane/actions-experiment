@@ -1,19 +1,25 @@
 name: Linting
-run-name: ${{ github.actor }} initiated this action 🚀
+run-name: Linting
 on: [push]
 jobs:
+  post-metadata:
+    # {owner}/{repo}/.github/workflows/{filename}@{ref}
+    # ./.github/workflows/{filename} for reusable workflows in the same repository.
+    uses: ./.github/workflows/called-metadata.yaml
+    with:
+      pr_number: 4 #"${{ github.event.number }}"
+    permissions:
+      pull-requests: write
   lint:
     runs-on: ubuntu-latest
+    needs: post-metadata
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v3 # https://github.com/dorny/paths-filter
         id: filter
         with:
-          filters: |
-            test1:
-              - 'test1/**'
-            test2:
-              - 'test2/**'
+          filters: .github/paths-filters.yaml
       - if: steps.filter.outputs.test1 == 'true'
         working-directory: ./test1
         run: |
