@@ -8,14 +8,16 @@ jobs:
   build:
     if: ${{ github.event.label.name == 'buildable' }}
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Build thing
         run: echo "🎉 This is where building will happen"
-      # - name: remove buildable label
-      #   uses: actions-ecosystem/action-remove-labels@v1
-      #   # if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
-      #   with:
-      #     labels: buildable
+      - name: remove buildable label
+        uses: actions-ecosystem/action-remove-labels@v1
+        # if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: buildable
       - name: add built label
         uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
         with:
