@@ -1,8 +1,6 @@
-![example workflow]
-(https://github.com/mmclane/actions-experiment/actions/workflows/hithub-actions-demo.yaml/badge.svg)
-
-![example workflow]
-(https://github.com/mmclane/actions-experiment/actions/workflows/learn-github-actions.yaml/badge.svg)
+#### Build Pipeline status
+- ![hithub-actions-demo](https://github.com/mmclane/actions-experiment/actions/workflows/hithub-actions-demo.yaml/badge.svg)
+- ![learn-github-actions](https://github.com/mmclane/actions-experiment/actions/workflows/learn-github-actions.yaml/badge.svg)
 
 
 Things I wanna figure out:
