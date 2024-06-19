@@ -13,15 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Comment on PR
     steps:
-      - uses: snnaplab/get-labels-action@v1
-        with:
-          number: ${{ inputs.pr_number }}
-          repository: ${{ github.repository }}
+
       - name: Comment PR
-        if: contains(fromJSON(env.LABELS), 'metadata-posted') == false
+        if:  ${{ steps.filter_labels.outputs.matched_count == 0 }}
         uses: thollander/actions-comment-pull-request@v2 # https://github.com/thollander/actions-comment-pull-request
         with:
-          pr_number: ${{ inputs.pr_number }}
+          pr_number: ${{ github.event.*.number }}
           message: |
             Called-metadata
             Repository: ${{ github.repository }}
@@ -32,7 +29,7 @@ jobs:
             Triggered by: ${{ github.actor }}
           reactions: eyes, rocket
       - name: Add metadata-posted label
-        if: contains(fromJSON(env.LABELS), 'metadata-posted') == false
+        if:  ${{ steps.filter_labels.outputs.matched_count == 0 }}
         uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
         with:
           number: ${{ inputs.pr_number }}
