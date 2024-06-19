@@ -11,11 +11,28 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - name: Build thing
-        run: echo "🎉 This is where building will happen"
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            test1:
+              - 'test1/**'
+            test2:
+              - 'test2/**'
+      - if: steps.filter.outputs.test1 == 'true'
+        working-directory: ./test1
+        run: |
+          echo "🎉 building test1"
+          make build
+      - if: steps.filter.outputs.test2 == 'true'
+        working-directory: ./test2
+        run: | 
+          echo "🎉 building test2"
+          make build     
+
       - name: remove buildable label
-        uses: actions-ecosystem/action-remove-labels@v1
-        # if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        uses: actions-ecosystem/action-remove-labels@v1 # https://github.com/actions-ecosystem/action-remove-labels
         with:
           labels: buildable
       - name: add built label
