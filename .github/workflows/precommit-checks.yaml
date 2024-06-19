@@ -1,4 +1,4 @@
-name: Linting
+name: Check precommit checks
 run-name: ${{ github.actor }} initiated this action 🚀
 on: [push]
 jobs:
