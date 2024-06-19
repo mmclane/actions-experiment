@@ -1,8 +1,22 @@
 name: Building
 run-name: ${{ github.actor }} initiated this action 🚀
-on: [push]
+on:
+  pull_request:
+    types:
+      - labeled
 jobs:
-  Explore-GitHub-Actions:
+  build:
+    if: ${{ github.event.label.name == 'buildable' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 This is where building will happen"
+      - name: Build thing
+        run: echo "🎉 This is where building will happen"
+      - name: remove buildable label
+        uses: actions-ecosystem/action-remove-labels@v1
+        # if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: buildable
+      - name: add built label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: built

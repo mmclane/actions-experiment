@@ -2,7 +2,7 @@ name: Linting
 run-name: ${{ github.actor }} initiated this action 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 This is where linting will happen"
