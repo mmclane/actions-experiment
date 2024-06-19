@@ -1,0 +1,27 @@
+name: Linting
+run-name: ${{ github.actor }} initiated this action 🚀
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            test1:
+              - 'test1/**'
+            test2:
+              - 'test2/**'
+      - if: steps.filter.outputs.test1 == 'true'
+        working-directory: ./test1
+        run: |
+          echo "🎉 Linting test1 directory"
+          make test
+        
+      - if: steps.filter.outputs.test2 == 'true'
+        working-directory: ./test2
+        run: | 
+          echo "🎉 Linting test2 directory"
+          make test

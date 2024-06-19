@@ -1,0 +1,8 @@
+name: Check precommit checks
+run-name: ${{ github.actor }} initiated this action 🚀
+on: [push]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 This is where we check that precommit has been run"

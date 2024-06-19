@@ -1,12 +1,13 @@
 #### Build Pipeline status
-- ![hithub-actions-demo](https://github.com/mmclane/actions-experiment/actions/workflows/hithub-actions-demo.yaml/badge.svg)
-- ![learn-github-actions](https://github.com/mmclane/actions-experiment/actions/workflows/learn-github-actions.yaml/badge.svg)
+- ![Linting](https://github.com/mmclane/actions-experiment/actions/workflows/linting.yaml/badge.svg)
+- ![Precommit Checks](https://github.com/mmclane/actions-experiment/actions/workflows/precommit-checks.yaml/badge.svg)
+- ![Build](https://github.com/mmclane/actions-experiment/actions/workflows/build.yaml/badge.svg)
 
 
 Things I wanna figure out:
-- Running a workflow on a subfolder but only when changes are in that subfolder
-- Status flags in the readme?
-- Should we use Make??
+- [ ] Running a workflow on a subfolder but only when changes are in that subfolder
+- [x] Status flags in the readme?
+- [ ] Should we use Make??
 
 
 
@@ -16,6 +17,7 @@ refs:
 - https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge 
  
 
+## Status badges
 You can build the URL for a workflow status badge using the name of the workflow file:
 
 https://github.com/OWNER/REPOSITORY/actions/workflows/WORKFLOW-FILE/badge.svg

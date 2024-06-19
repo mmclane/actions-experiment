@@ -1,0 +1,41 @@
+name: Building
+run-name: ${{ github.actor }} initiated this action 🚀
+on:
+  pull_request:
+    types:
+      - labeled
+jobs:
+  build:
+    if: ${{ github.event.label.name == 'buildable' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            test1:
+              - 'test1/**'
+            test2:
+              - 'test2/**'
+      - if: steps.filter.outputs.test1 == 'true'
+        working-directory: ./test1
+        run: |
+          echo "🎉 building test1"
+          make build
+      - if: steps.filter.outputs.test2 == 'true'
+        working-directory: ./test2
+        run: | 
+          echo "🎉 building test2"
+          make build     
+
+      - name: remove buildable label
+        uses: actions-ecosystem/action-remove-labels@v1 # https://github.com/actions-ecosystem/action-remove-labels
+        with:
+          labels: buildable
+      - name: add built label
+        uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
+        with:
+          labels: built
