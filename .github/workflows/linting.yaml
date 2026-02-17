@@ -2,37 +2,39 @@ name: Linting
 run-name: Linting
 on: [push]
 jobs:
-  post-metadata:
-    permissions:
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get PR labels
-        id: pr-labels
-        uses: irby/get-labels-on-push@v1.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Comment PR
-        if: contains(steps.pr-labels.outputs.labels, ' metadata-posted ') == false
-        uses: thollander/actions-comment-pull-request@v2 # https://github.com/thollander/actions-comment-pull-request
-        with:
-          message: |
-            Called-metadata
-            Repository: ${{ github.repository }}
-            Branch Name: ${{ github.ref_name }}
-            Target Branch: ${{ github.base_ref }}
+  # post-metadata:
+  #   permissions:
+  #     pull-requests: write
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get PR labels
+  #       id: pr-labels
+  #       uses: irby/get-labels-on-push@v1.0.1
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+      
+  #     # - name: Comment PR
+  #     #   if: contains(steps.pr-labels.outputs.labels, ' metadata-posted ') == false
+  #     #   uses: thollander/actions-comment-pull-request@v2 # https://github.com/thollander/actions-comment-pull-request
+  #     #   with:
+  #     #     message: |
+  #     #       Called-metadata
+  #     #       Repository: ${{ github.repository }}
+  #     #       Branch Name: ${{ github.ref_name }}
+  #     #       Target Branch: ${{ github.base_ref }}
 
-            Github Event: ${{ github.event_name }}
-            Triggered by: ${{ github.actor }}
-          reactions: eyes, rocket
-      - name: Add metadata-posted label
-        if: contains(steps.pr-labels.outputs.labels, ' metadata-posted ') == false
-        uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
-        with:
-          labels: metadata-posted
+  #     #       Github Event: ${{ github.event_name }}
+  #     #       Triggered by: ${{ github.actor }}
+  #         # reactions: eyes, rocket
+  #     - name: Add metadata-posted label
+  #       if: contains(steps.pr-labels.outputs.labels, ' metadata-posted ') == false
+  #       uses: actions-ecosystem/action-add-labels@v1 # https://github.com/actions-ecosystem/action-add-labels
+  #       with:
+  #         issue_number: ${{ github.event.number }}
+  #         labels: metadata-posted
   lint:
     runs-on: ubuntu-latest
-    needs: post-metadata
+    # needs: post-metadata
     steps:
       - name: Checkout
         uses: actions/checkout@v3

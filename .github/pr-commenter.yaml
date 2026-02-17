@@ -1,0 +1,31 @@
+comment:
+  on-update: recreate
+  header: |
+    Thank you for contributing to this repository :tada:.
+
+  footer: |
+    ---
+    Automated comment created by [PR Commenter](https://github.com/exercism/pr-commenter-action) :robot:.
+
+  snippets:
+    - id: anything
+      files:
+        - '*'
+        - '**/*'
+      body: |
+        Called-metadata
+        Repository: ${{ github.repository }}
+        Branch Name: ${{ github.ref_name }}
+        Target Branch: ${{ github.base_ref }}
+
+        Github Event: ${{ github.event_name }}
+        Triggered by: ${{ github.actor }}
+      
+    - id: any-markdown-file-changed
+      files:
+        - '*.md'
+        - '**/*.md'
+      body: |
+        It looks like you're changing a Markdown file.
+        Make sure your changes follow our [language guidelines](some-link) when writing documentation.
+        
